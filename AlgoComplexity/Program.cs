@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 
 namespace AlgoComplexity
 {
@@ -11,9 +12,53 @@ namespace AlgoComplexity
     {
         static void Main(string[] args)
         {
-            Sorts.Bubble();
+            var st = new Stopwatch();
+
+            int size = 50000;
+            
+            int[] array = new int[size];
+
+            var rnd = new Random(40);
+            
+            for (int i = 0; i < size; i++)
+            {
+                array[i] = rnd.Next(0, 5000);
+                if (array[i] % 2 == 0)
+                {
+                    array[i] += 1;
+                }
+            }
+            
+            st.Start();
+            for (int i = 0; i < size; i++)
+            {
+                array[i] += 1;
+                
+            }
+            st.Stop();
+            Console.WriteLine($"Not sort = {st.ElapsedTicks}");
+            
+            st.Reset();
+            
+            Array.Sort(array);
+            
+            st.Start();
+            for (int i = 0; i < size; i++)
+            {
+                array[i] += 1;
+                
+            }
+            st.Stop();
+            Console.WriteLine($"After sort = {st.ElapsedTicks}");
         }
 
+        public static bool LongCalc()
+        {
+            Thread.Sleep(2000);
+            return false;
+        }
+        
+        
         static void arrayIncrement()
         {
             var st = new Stopwatch();
